@@ -1,0 +1,21 @@
+<% if @verified.present? %>
+  <div class="row">
+    <div class="col s12 whitelisted">
+      <h3><%= @verified.length %> Whitelisted Domains</h3>
+      <p>Domains verified by the <a class="link" href="https://www.poynter.org/ifcn/" target="_blank" rel="noopener noreferrer">IFCN</a></p>
+    </div>
+  </div>
+  <div class="row">
+    <% count = 1 %>
+    <% @verified.each do |fm| %>
+      <%= render partial: 'components/result_card.html.erb', locals: {
+        image_url: fm[:image_url], page_title: fm[:page_title], page_url: fm[:page_url],
+        page_desc: fm[:page_desc], last_modified: fm[:last_modified], verified: true
+      } %>
+      <% if count % 3 == 0 %>
+        </div><div class="row">
+      <% end %>
+      <% count += 1 %>
+    <% end %>
+  </div>
+<% end %>

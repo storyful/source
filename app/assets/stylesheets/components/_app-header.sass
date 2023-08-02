@@ -1,0 +1,54 @@
+$header-height: 65px
+
+.app-header
+  height: $header-height
+  background-image: linear-gradient(to right, $navy , $light-navy)
+  color: $white
+  display: flex
+  align-items: center
+
+.app-logo
+  width: 100px
+  height: 50px
+  background: asset-data-url("source-logo.svg") no-repeat center
+  background-size: contain
+  margin: 0 8px 0 20px
+  @media #{$small-and-down}
+    width: 60px
+
+.app-title
+  display: flex
+  align-items: flex-end
+
+.app-name
+  font-size: 24px
+  line-height: 28px
+  color: $white
+  @media #{$small-and-down}
+    font-size: 20px
+    line-height: 24px
+
+.app-powered-by
+  padding-left: 12px
+  font-size: 12px
+  @media #{$small-and-down}
+    font-size: 10px
+    padding-left: 8px
+  &:before
+    content: ""
+    display: inline-block
+    width: 1px
+    height: 18px
+    background: $white
+    margin: 0px 12px -2px 0
+    @media #{$small-and-down}
+      margin: 0px 8px -2px 0
+
+.app-logo-organisation
+  background: asset-data-url("organisation-logo.svg") no-repeat center
+  background-size: contain
+  width: 90px
+  height: 20px
+  @media #{$small-and-down}
+    width: 60px
+    margin: 0px 0px -2px 8px

@@ -1,0 +1,158 @@
+.results-header
+  border-bottom: 1px solid $medium-grey
+
+.new-search
+  align-items: baseline
+  float: right
+  padding: 24px 0
+
+img.uploaded-image
+  max-width: 100%
+  border: 1px solid $medium-grey
+
+.results-title a
+  color: $black
+  vertical-align: middle
+  margin-left: 12px
+
+.card-image
+  .image-not-found-placeholder
+    display:none
+  img
+    min-width: 150px
+
+  img.image-not-found
+    display: none
+
+  img.image-not-found+.image-not-found-placeholder
+    background: $medium-grey asset-data-url('image-not-found.png') no-repeat 50% 40%
+    width: 100%
+    height: 194px
+    position: relative
+    &:after
+      position: absolute
+      text-align: center
+      content: 'Image no longer exists on this website'
+      font-size: 12px
+      width: 100%
+      top: 60%
+      color: $dark-grey
+
+.language-dropdown-container
+  display: flex
+  > div
+    width: 143px
+
+  > div:first-child
+      margin-right: 28px
+
+.sorting-buttons
+  > label:first-child
+      font-weight: bold
+      color: $dark-grey
+
+  > label.syfl-radiobutton:first-child
+      margin-right: 14px
+
+  .syfl-dropdown
+    display: inline-block
+    margin: 0 24px 0 0
+    max-width: 166px
+
+  label
+    color: $black
+    font-weight: bold
+    font-size: 15px
+
+.translated-text-container
+  display: none
+  &.visible
+    display: block
+
+  &.error p
+    color: $red
+
+.no-results-container
+  text-align: center
+  margin: 24px 0 80px
+  padding: 24px 0 0 0
+  border-top: 1px solid $medium-grey
+  a i,
+  button i
+    vertical-align: bottom
+
+@media only screen and (max-width: 600px)
+  .sorting-buttons
+    .syfl-dropdown
+      display: block
+      margin-bottom: 15px
+
+  .language-dropdown-container
+    margin-top: 15px
+
+.try-again-buttons
+  #new_uploaded_image
+    display: inline-block
+
+.trigger-full-search-btn
+  border: 1px solid $orange
+  border-radius: 2px
+  background: transparent
+  text-transform: uppercase
+  color: $orange
+  padding: 10px
+  font-weight: bold
+  width: 100%
+  margin-top: 10px
+  &:focus
+    background: transparent
+  &:disabled
+    border: 1px solid $medium-grey
+    color: $medium-grey
+
+.material-tooltip
+  font-size: 12px
+
+.language-not-detected
+  color: $red
+
+.new-upload
+  text-align: center
+  padding-top: 40px
+  .new-search
+    float: none
+
+.filter-results
+  position: relative
+
+
+@keyframes pulse
+  0%
+    opacity: 1
+  90%
+    opacity: 0
+
+@keyframes moveup
+  80%
+    z-index: 100
+
+#notify-results
+  background: white
+  border-bottom: 2px solid #67bbf3
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.19)
+  opacity: 0
+  padding: 25px
+  position: absolute
+  top: 55px
+  width: 100%
+  z-index: -1
+
+  &.fade
+    animation: pulse 2s linear 0s, moveup 5s
+
+  span
+    font-size: 24px
+    line-height: 24px
+  i
+    display: inline-flex
+    vertical-align: top

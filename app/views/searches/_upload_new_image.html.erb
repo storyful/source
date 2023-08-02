@@ -1,0 +1,9 @@
+<div class="new-search">
+  <%= form_for @uploaded_image_new, html: { id: 'new_uploaded_image' } do |f| %>
+    <%= f.file_field :file, class: "file-upload-hidden", onchange: "uploadImage()" %>
+    <%= f.label :file, class: "file-upload-button waves-effect organisation-btn" do %>
+      </span>Upload New Image</span>
+      <i class="material-icons">file_download</i>
+    <% end %>
+  <% end %>
+</div>

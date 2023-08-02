@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["https://source-staging.organisation.com", "https://source.organisation.com", "https://source-staging2.organisation.com", "http://localhost:3000"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD", "DELETE"],
+      "maxAgeSeconds": 3600
+    }
+]

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Source</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('favicons/favicon.ico') %>
+  </head>
+
+  <body class="<%= controller.controller_name %>_<%= controller.action_name %>">
+    <%= render partial: 'components/app_header' %>
+    <%= yield %>
+
+    <div class="get-in-touch">
+      If you are a fact-checker or journalist and believe Source could be useful for your work, please 
+      <a href="https://forms.gle/2BkPnQWwzkg4wK796" target="_blank" rel="noopener noreferrer">
+        reach out
+      </a>
+       to us.
+    </div>
+
+    <div class="google-policy">
+      View
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+        Google
+      </a>
+      &amp;
+      <a href="https://organisation.com/privacy/" target="_blank" rel="noopener noreferrer">
+        organisation
+      </a>
+      privacy policies
+    </div>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142321868-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142321868-1');
+    </script>
+  </body>
+</html>

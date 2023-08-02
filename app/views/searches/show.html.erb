@@ -1,0 +1,114 @@
+<div class="results-header">
+  <div class="container">
+    <div class="row no-margin-bottom">
+      <div class="col s12">
+        <%= render partial: 'searches/upload_new_image' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'components/app_overlay', locals: { text: 'Uploading Image', id: 'overlay-upload-image' } %>
+
+<div class="container results">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="results-title">
+        Results
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col m6 s12">
+      <img src="<%= @search.uploaded_image %>" class="uploaded-image">
+    </div>
+
+    <div class="col m6 s12">
+      <%= render :partial => "searches/extracted_text", locals: { extracted_text: @extracted_text, search: @search, languages: @languages } if @extracted_text.present?  %>
+    </div>
+  </div>
+
+  <% if @verified.count.positive? || @full_matches.count.positive? || @partial_matches.count.positive? %>
+    <div class="row filter-results">
+      <div class="col m12 s12">
+        <div id="notify-results">
+          <i class="material-icons">info</i>
+          <span>Fetching new results...</span>
+        </div>
+        <h3 class="subtitle">Matching images</h3>
+        <div class="sorting-buttons">
+          <div class="input-field syfl-dropdown">
+            <%= select_tag 'filter_by', options_for_select(@filter_options.map {|k,v| [k, v]}, selected: 'all time'), { id: 'select-filter-by', onchange: "SearchService.filterOrSort(searchId, verifiedMatches, fullMatches, partialMatches)" } %>
+          </div>
+
+          <label>Sort by:</label>
+          <label class="syfl-radiobutton ">
+            <input class="sort-order with-gap" name="sort-order" type="radio" checked onchange="SearchService.filterOrSort(searchId, verifiedMatches, fullMatches, partialMatches)"  />
+            <span>Newest</span>
+          </label>
+
+          <label class="syfl-radiobutton">
+            <input class="sort-order with-gap" name="sort-order" type="radio" onchange="SearchService.filterOrSort(searchId, verifiedMatches, fullMatches, partialMatches)"  />
+            <span>Oldest</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <div id="verified">
+      <%= render partial: 'searches/verified', locals: { verified: @verified } %>
+    </div>
+    <div id="full-matches">
+      <%= render partial: 'searches/full_matches', locals: { full_matches: @full_matches } %>
+    </div>
+    <div id="partial-matches">
+      <%= render partial: 'searches/partial_matches', locals: { partial_matches: @partial_matches } %>
+    </div>
+
+    <button class="trigger-full-search-btn" onclick="SearchService.triggerFullResults(searchId, this)">Show all results</button>
+  <% else %>
+    <div class="no-results-container">
+      <h2>No images matched the search</h2>
+      <p>No images matched the search. You can try editing the image that you uploaded or uploading a new image.</p>
+      <div class="try-again-buttons">
+        <%= form_for @uploaded_image_new, html: { id: 'new_uploaded_image' } do |f| %>
+          <%= f.file_field :file, class: "file-upload-hidden", onchange: "uploadImage()" %>
+          <%= f.label :file, class: "file-upload-button waves-effect btn-flat" do %>
+            </span>Upload Image</span>
+            <i class="material-icons">file_download</i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: 'components/error_popup', locals: { errors: @upload_errors } %>
+
+  <%= javascript_tag do %>
+    var searchId = '<%= @search.uid %>';
+    var supportedLanguages = <%= raw @languages.to_json %>;
+    var fullMatches = <%= raw @full_matches.to_json %>;
+    var partialMatches = <%= raw @partial_matches.to_json %>;
+    var verifiedMatches = <%= raw @verified.to_json %>;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.tooltipped');
+      var instances = M.Tooltip.init(elems, {});
+    });
+
+    function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
+
+    r(function() {
+      SearchService.init(supportedLanguages);
+      ImageLazyLoader.init('.card-image img');
+    });
+  <% end %>
+</div>
+
+<div class="row new-upload">
+  <div class="container">
+    <h3>Do you want to start a new analysis?</h3>
+    <%= render partial: 'searches/upload_new_image' %>
+  </div>
+</div>

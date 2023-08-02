@@ -1,0 +1,15 @@
+<div id="error-modal" class="modal">
+  <div class="modal-content">
+    <% errors.each do |k, es| %>
+      <% es.each do |error| %>
+        <h4>
+          <i class="material-icons">warning</i>
+          <%= error.html_safe %>
+        </h4>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <span class="modal-close waves-effect waves-green btn-flat">Close</span>
+  </div>
+</div>

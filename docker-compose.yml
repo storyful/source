@@ -1,0 +1,69 @@
+version: '3.7'
+volumes:
+  redis-data:
+    driver: local
+services:
+  app:
+    tty: true
+    stdin_open: true
+    environment:
+      RAILS_ENV: development
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app
+      - ~/.ssh:/root/.ssh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - "3000:3000"
+      - "5432:5432"
+  bootstrap:
+    image: source_app
+    command: ./bootstrap.sh
+    env_file:
+    - .env
+    depends_on:
+    - app
+    restart: on-failure
+    volumes:
+    - .:/app
+
+  redis:
+    image: redis:2.8
+    hostname: redis
+    env_file:
+    - .env
+    depends_on:
+    - app
+    restart: on-failure:3
+    ports:
+    - 127.0.0.1:6389:6379
+    volumes:
+    - redis-data:/data
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - app
+    environment:
+      BACKEND_HOST: app
+      BACKEND_PORT: 3000
+      LOG_FORMAT: text
+    ports:
+      - 127.0.0.1:8080:80
+
+  sidekiq:
+    image: source_app
+    command: bundle exec sidekiq
+    depends_on:
+    - app
+    - redis
+    restart: on-failure
+    volumes:
+    - .:/app
+    - ~/.ssh:/root/.ssh:ro

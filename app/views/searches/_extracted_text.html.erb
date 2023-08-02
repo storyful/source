@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col s12">
+    <div class="language-dropdown-container">
+      <div class="input-field syfl-dropdown">
+        <% detected = extracted_text[:code].length > 2 ? extracted_text[:code][0,2] : extracted_text[:code] %>
+        <%= select_tag 'guessed_lang', options_for_select(@languages.collect {|v| [v['name'], v['code']]}.push(['Unknown', 'un']), selected: detected), { id: 'select-translate-from', onchange: 'SearchService.translate()' } %>
+        <label>Language Detected</label>
+      </div>
+      <div class="input-field syfl-dropdown">
+        <%= select_tag 'translated_to', options_for_select(@languages.collect {|v| [v['name'], v['code']]}), { id: 'select-translate-to', onchange: 'SearchService.translate()'} %>
+        <label>Translated to</label>
+      </div>
+    </div>
+
+    <% if detected == 'un' %>
+      <p class="language-not-detected">Could not detect language</p>
+    <% end %>
+
+    <h3 class="noborder">Text Detected</h3>
+    <p id="text-detected" class="no-margins"><%= extracted_text[:text] %></p>
+
+    <div id="translated-text-container" class="translated-text-container">
+      <h3 class="noborder">Translation</h3>
+      <p id="translated-text"></p>
+    </div>
+  </div>
+</div>

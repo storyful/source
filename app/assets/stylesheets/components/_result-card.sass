@@ -1,0 +1,84 @@
+.results
+  h3
+    padding-top: 8px
+    border-top: 1px solid $medium-grey
+    margin: 24px 0
+  .row
+    padding-bottom: 0
+    margin-bottom: 0
+
+  .whitelisted
+    margin-bottom: 24px
+    h3
+      margin-bottom: 0
+    p
+      margin: 0
+  .noborder
+    border-top: 0
+
+  p.no-margins
+    margin: 0
+
+  h3.no-top-spacing
+    margin-top: 0
+
+.results
+  .card .card-action
+    overflow: hidden
+    max-width: 100%
+    white-space: nowrap
+    text-overflow: ellipsis
+    color: $orange
+    font-size: 12px
+    padding: 16px
+    &--url
+      margin-right: 0!important
+      text-decoration: underline
+      text-transform: none
+      &.verified
+        display: inline-block
+        color: $green
+        &:before
+          content: ''
+          vertical-align: middle
+          display: inline-block
+          width: 20px
+          height: 20px
+          margin-right: 8px
+          background: asset-data-url("IFCN_Logo.svg") no-repeat center
+
+  .card-content
+    padding: 16px
+    color: $black
+    &--last-modified
+      color: $dark-grey
+    &--title
+      font-size: 15px
+      font-weight: bold
+      line-height: 22px
+      margin: 8px 0
+
+  .card-body
+    word-break: break-word
+
+  .card-body.long-text
+    max-height: 210px
+    overflow: hidden
+    position: relative
+    &:after
+      width: 100%
+      position: absolute
+      bottom: 0
+      height: 25px
+      content: "read more"
+      background-image: linear-gradient(to top, rgba($medium-grey,1) 70%, rgba($white, 0.1) 100%)
+      z-index: 1
+      text-align: center
+      font-size: 10px
+      left: 0
+      line-height: 29px
+
+@media only screen and (max-width: 600px)
+  .results
+    h3.no-top-spacing
+      margin-top: 10px

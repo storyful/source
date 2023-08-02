@@ -1,0 +1,24 @@
+.app-overlay
+  display: none
+  position: fixed
+  z-index: 100
+  height: 100%
+  width: 100%
+  left: 0
+  top: 0
+  background: rgba(0, 0, 0, 0.6)
+  color: $white
+  font-size: 18px
+  font-weight: bold
+  line-height: 31px
+  .app-overlay-inner
+    text-align: center
+    width: 100%
+  .preloader-wrapper
+    vertical-align: middle
+    margin-right: 12px
+  &.visible 
+    display: flex
+
+.spinner-orange
+  border-color: $orange

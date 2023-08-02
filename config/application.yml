@@ -1,0 +1,22 @@
+
+defaults: &defaults
+  master_password: '<%= ENV['MASTER_PASSWORD'] %>'
+  google:
+    project_id: '<%= ENV['PROJECT_ID'] %>'
+    credentials: '<%= ENV['GOOGLE_APPLICATION_CREDENTIALS'] %>'
+    sheet_passcodes_id: '<%= ENV['GOOGLE_SHEET_PASSCODES_ID'] %>'
+    sheet_whitelist_urls_id: '<%= ENV['GOOGLE_SHEET_WHITELIST_URLS_ID'] %>'
+    max_results: <%= ENV['GOOGLE_VISION_API_MAX_RESULTS'] || 500 %>
+  redis:
+    port: <%= ENV['REDIS_PORT'] || 6379 %>
+    host: <%= ENV['REDIS_HOST'] || 'redis' %>
+
+development: &development
+  <<: *defaults
+
+test:
+  <<: *development
+  master_password: '<%= ENV['MASTER_PASSWORD'] %>'
+
+production: &production
+  <<: *defaults

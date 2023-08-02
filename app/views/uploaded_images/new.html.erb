@@ -1,0 +1,47 @@
+<div class="app-hero">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 app-hero-desktop-image hide-on-small-and-down"></div>
+      <div class="col s12 app-hero-mobile-image hide-on-med-and-up"></div>
+    </div>
+    <div class="row">
+      <div class="col s12 l6">
+        <h1>Helping journalists fight misinformation by leveraging the power of Google&apos;s AI.</h1>
+        <p>
+          Source gives you instant analysis of your image’s potential history, recognising objects, languages and offering automatic translations.
+        </p>
+        <%= form_for @uploaded_image, html: { id: 'new_uploaded_image' } do |f| %>
+          <%= f.file_field :file, class: "file-upload-hidden", onchange: "uploadImage()" %>
+          <%= f.label :file, class: "file-upload-button organisation-btn" do %>
+              <span>Upload Image</span>
+              <i class="material-icons">file_download</i>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m4">
+        <p class="upload-info">
+          File must be less than 2mb in size and must be .jpg, .gif or .png.
+        </p>
+      </div>
+    </div>
+    <% errors = flash[:image_error].present? ? flash[:image_error] : @upload_error %>
+    <%= render partial: 'components/error_popup', locals: { errors: errors } %>
+  </div>
+</div>
+
+<%= render partial: 'components/app_overlay', locals: { text: 'Uploading Image', id: 'overlay-upload-image' } %>
+
+<%= javascript_tag do %>
+  var flashError = <%= flash[:image_error].present? ? true : false %>;
+  var errorModal = M.Modal.init(document.querySelectorAll('.modal')[0], {});
+
+  function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
+
+  r(function() {
+    if(flashError){
+      errorModal.open();
+    }
+  });
+<% end %>

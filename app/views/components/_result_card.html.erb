@@ -1,0 +1,26 @@
+<div class="col s12 m4 result-container">
+  <a href="<%= page_url %>" target="_blank" rel="noopener noreferrer">
+    <article class="card">
+      <section class="card-image">
+        <img data-url="<%= image_url %>" onerror="this.className = 'image-not-found'">
+        <div class="image-not-found-placeholder"></div>
+      </section>
+      <section class="card-content">
+        <small class="card-content--last-modified"><%= last_modified %></small>
+        <h4 class="card-content--title truncate"><%= page_title.html_safe %></h4>
+        <p class="card-body <%= 'long-text' if  page_desc.present? && page_desc.length > 250 %>" onclick="SearchService.toggleLongText(event)"><%= page_desc %></p>
+      </section>
+      <section class="card-action">
+        <% if verified.present? %>
+          <span class="card-action--url verified">
+            <%= page_url %>
+          </span>
+        <% else %>
+          <span class="card-action--url">
+            <%= page_url %>
+          </span>
+        <% end %>
+      </section>
+    </article>
+  </a>
+</div>

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="edit-image-title">
+      <h2>Edit Image</h2>
+      <%= form_for @uploaded_image, url: uploaded_image_path(id: @uploaded_image.uid), method: :put do |f| %>
+        <%= f.hidden_field :crop_x %>
+        <%= f.hidden_field :crop_y %>
+        <%= f.hidden_field :crop_w %>
+        <%= f.hidden_field :crop_h %>
+        <%= f.hidden_field :rotate %>
+        <%= f.hidden_field :scale_x %>
+        <%= f.hidden_field :scale_y %>
+        <%= f.hidden_field :uid %>
+        <input type='Submit' value='Analyse' class='organisation-btn' onclick="analyseImage()" />
+      <% end %>
+    </div>
+
+    <div class="card image-upload">
+      <div class="buttons-container">
+        <button onclick="ImageProcessor.flipX()" class="waves-effect btn-flat">
+          <i class="material-icons">flip</i> Flip Horizontally
+        </button>
+        <button onclick="ImageProcessor.flipY()" class="waves-effect btn-flat">
+          <i class="material-icons rotate-90">flip</i> Flip Vertically
+        </button>
+        <button onclick="ImageProcessor.rotate()" class="waves-effect btn-flat">
+          <i class="material-icons">rotate_right</i> Rotate
+        </button>
+      </div>
+      <div class="image-container">
+        <img class="image" id="image" src="<%= @uploaded_image.file_url %>" alt="Red dot" onload="ImageProcessor.initCropper('image')" />
+      </div>
+      <% if @uploaded_image.multiple_frames == 'true' %>
+        <p class="image-first-frame-info">* Please note: for animated gifs, only the first frame is analysed.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'components/app_overlay', locals: { text: 'Analysing Image', id: 'overlay-analyse-image'  } %>

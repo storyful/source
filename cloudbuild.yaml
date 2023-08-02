@@ -1,0 +1,89 @@
+#########################################################################################
+################################# Google Cloud Build Steps ##############################
+#########################################################################################
+
+steps:
+###############
+# Build Nginx
+###############
+  #CACHE
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull us.gcr.io/<project ID>/source_nginx:cache || exit 0']
+  #BUILD
+- name: 'gcr.io/cloud-builders/docker'
+  dir: 'nginx/'
+  args:
+    - "build"
+    - '--tag=us.gcr.io/<project ID>/source_nginx:latest'
+    - "-t"
+    - "us.gcr.io/<project ID>/source_nginx:${SHORT_SHA}"
+    - "-t"
+    - "us.gcr.io/<project ID>/source_nginx:cache"
+    - "--cache-from"
+    - "us.gcr.io/<project ID>/source_nginx:cache"
+    - "."
+  #PUSH
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - "push"
+    - "us.gcr.io/<project ID>/source_nginx:${SHORT_SHA}"
+###############
+# Build App
+###############
+  #CACHE
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull us.gcr.io/<project ID>/source_app:cache || exit 0']
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', "gcloud secrets versions access latest --secret=sourcenew --format='get(payload.data)' | tr '_-' '/+' | base64 -d > .env" ]
+  #BUILD
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - "build"
+    - "-t"
+    - "us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+    - "-t"
+    - "us.gcr.io/<project ID>/source_app:cache"
+    - "--cache-from"
+    - "us.gcr.io/<project ID>/source_app:cache"
+    - "."
+  #TEST
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - "run"
+    - "-e"
+    - "RAILS_ENV=test"
+    - "us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+    - "rubocop -R ."
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - "run"
+    - "-e"
+    - "RAILS_ENV=test"
+    - "us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+    - "rspec spec -f documentation ."
+  #PUSH
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - "push"
+    - "us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+###############
+# DEPLOY
+###############
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - "--namespace"
+    - "${_DEPLOY_NAMESPACE}"
+    - "set"
+    - "image"
+    - "--record"
+    - "deploy/source-${_DEPLOY_TARGET}"
+    - "sidekiq=us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+    - "source-${_DEPLOY_TARGET}=us.gcr.io/<project ID>/source_app:${SHORT_SHA}"
+    - "source-nginx=us.gcr.io/<project ID>/source_nginx:${SHORT_SHA}"
+  env:
+    - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=source-production'
+timeout: 1500s

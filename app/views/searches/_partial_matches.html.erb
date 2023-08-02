@@ -1,0 +1,22 @@
+<% if @partial_matches.present? %>
+  <div class="row">
+    <div class="col s12">
+      <h3 class="subtitle">
+        <%= @partial_matches.length %> Partial Matches
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <% count = 1 %>
+    <% @partial_matches.each do |fm| %>
+      <%= render partial: 'components/result_card.html.erb', locals: {
+        image_url: fm[:image_url], page_title: fm[:page_title], page_url: fm[:page_url],
+        page_desc: fm[:page_desc], last_modified: fm[:last_modified], verified: false
+      } %>
+      <% if count % 3 == 0 %>
+        </div><div class="row">
+      <% end %>
+      <% count += 1 %>
+    <% end %>
+  </div>
+<%end %>

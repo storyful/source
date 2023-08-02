@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <%= form_tag auth_create_path, method: :post, class: 'app-login' do %>
+        <h1>Sign In</h1>
+        <%= password_field_tag 'master_password', nil, placeholder: 'Pass Code', class: 'password-field' %>
+        <%= submit_tag 'Sign in', class: 'waves-effect waves-light btn app-login-button' %>
+        <div class="app-login-error">
+          <% if flash[:error].present? %>
+            <p class="app-login-error"><%= flash[:error] %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

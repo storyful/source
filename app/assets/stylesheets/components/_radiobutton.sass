@@ -1,0 +1,26 @@
+.syfl-radiobutton
+  input[type="radio"]:checked + span:after,
+  input[type="radio"].with-gap:checked + span:before,
+  input[type="radio"].with-gap:checked + span:after
+    border-color: $orange
+
+  input[type="radio"]:not(:checked) + span:before,
+  input[type="radio"]:not(:checked) + span:after
+    border-color: $dark-grey
+    opacity: 0.54
+
+  input[type="radio"]:checked + span:after,
+  [type="radio"].with-gap:checked + span:after
+    background-color: $orange
+
+  input[type="radio"]:not(:checked) + span,
+  input[type="radio"]:checked + span
+    padding-left: 30px
+    font-size: 12px
+    color: $dark-grey
+
+  input[type="radio"] + span:before,
+  input[type="radio"] + span:after
+    width: 20px
+    height: 20px
+    margin-top: 2px

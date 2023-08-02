@@ -1,0 +1,69 @@
+require: rubocop-rspec
+
+Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+   - config/routes/*_routes.rb
+   - spec/**/*.rb
+   - config/routes.rb
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+   - app/services/results/pipl_results_service.rb
+   - app/resources/api/internal/account_resource.rb
+   - app/clients/syfl_api_client.rb
+   - app/models/tribe.rb
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 30
+
+Layout/BlockEndNewline:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - config/puma.rb
+    - bin/**/*
+    - db/**/*
+    - Guardfile
+    - tmp/**/*
+    - vendor/**/*
+    - test/**/*
+    - app/services/search_service.rb
+    - app/services/text_service.rb
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/ExpectActual:
+  Exclude:
+    - spec/**/**/**.rb
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+Lint/ImplicitStringConcatenation:
+  Exclude:
+    - app/models/setting*.rb
+
+Rails/Delegate:
+  Exclude:
+    - spec/**/*.rb
+
+RSpec/ScatteredSetup:
+  Exclude:
+    - spec/**/*.rb
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - app/jobs/*

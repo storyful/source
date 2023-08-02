@@ -1,0 +1,53 @@
+.edit-image-title
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 40px
+  margin: 20px 0 20px
+  h2
+    margin: 0
+    font-size: 21px
+    font-weight: bold
+    line-height: 31px
+
+.image-upload.card
+  display: flex
+  overflow: hidden
+  padding: 20px 0
+
+.image-container
+  flex: 4
+  height: auto
+  margin: auto
+  max-height: 450px
+  max-width: 90%
+
+img.image
+  width: 100%
+
+.buttons-container
+  flex: 1
+  justify-content: center
+  padding: 20px 0 0
+  width: 100%
+  @media #{$small-and-down}
+    overflow-x: scroll
+    justify-content: flex-start
+  button
+    width: 100%
+    height: auto
+  i
+    display: block
+    margin-right: 4px
+    padding: 10px
+    vertical-align: middle
+
+.rotate-90
+  transform: rotate(90deg)
+
+.image-first-frame-info
+  text-align: left
+  display: block
+  color: $dark-grey
+  max-width: 90%
+  margin: 12px auto 0
