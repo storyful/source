@@ -1,8 +1,12 @@
 # Source
 
-It is intended that the application will allow a user to perform a reverse image search on an image uploaded by the user. The user may optionally crop, flip or rotate the image within the application prior to uploading it.
+The Source app uses Google Cloud’s AI tools to give journalists instant access to an image's public history, so they can sort and analyze its provenance, including any manipulation. Source even goes a step further: helps detect and translate text within images. It was developed by Storyful in partnership with the Google News Initiative. More information on the project can be found here https://blog.google/around-the-globe/google-asia/new-tool-helping-asian-newsrooms-detect-fake-images/
+
+In practical terms the application will allow a user to perform a reverse image search on an image uploaded by the user. The user may optionally crop, flip or rotate the image within the application prior to uploading it.
 
 On completion of the reverse image search, the intention is that the application will display the results, which can then be filtered and/or sorted by the user by age. The intention is for the application to support the extraction of text found within an uploaded image and translation of same from a selection of supported languages.
+
+This project is available for use under the Apache 2.0 license. There may be some fragmented references (logos and links) to Storyful within the code, which should be removed if you wish to build and host yourself.
 
 ## Architecture
 
